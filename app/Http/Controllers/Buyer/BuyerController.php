@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Buyer;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
+use App\Models\Buyer;
 use Illuminate\Http\Request;
 
-class BuyerController extends Controller
+class BuyerController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,10 @@ class BuyerController extends Controller
      */
     public function index()
     {
-        //
+
+        $buyer=Buyer::has('transactions')->get();
+        // return response()->json(["data"=>$buyer,200]);
+        return $this->showAll($buyer);
     }
 
     /**
@@ -46,7 +50,10 @@ class BuyerController extends Controller
      */
     public function show($id)
     {
-        //
+        $buyer=Buyer::has('transactions')->findorfail($id);
+        // return response()->json(["data"=>$buyer,200]);
+        return $this->showOne($buyer);
+
     }
 
     /**

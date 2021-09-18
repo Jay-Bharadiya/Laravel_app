@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Validation\Validator;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,9 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return response()->json(["data" => $users], 200);
+        // return response()->json(["data" => $users], 200);
+        return $this->showAll($users);
+
     }
 
     /**
@@ -46,7 +48,9 @@ class UserController extends Controller
         $data['verified'] = User::UNVERIFIED_USER;
         $data['admin'] = User::REGULAR_USER;
         $user = User::create($data);
-        return response()->json(["data" => $user], 201);
+        // return response()->json(["data" => $user], 201);
+        return $this->showOne($user,201);
+
     }
 
     /**
@@ -60,7 +64,9 @@ class UserController extends Controller
         //
 
         $user = User::find($id);
-        return response()->json(["data" => $user], 200);
+        // return response()->json(["data" => $user], 200);
+        return $this->showOne($user);
+
     }
 
     /**
@@ -112,7 +118,9 @@ class UserController extends Controller
         }
 // dd($user);
         $user->save();
-        return response()->json(["data" => $user], 200);
+        // return response()->json(["data" => $user], 200);
+        return $this->showOne($user);
+
     }
 
     /**
@@ -125,7 +133,8 @@ class UserController extends Controller
     {
         $user = User::findorfail($id);
         $user->delete();
-        return response()->json(["data"=>"user sucessfully deleted ", 200]);
+        // return response()->json(["data"=>"user sucessfully deleted ", 200]);
+        return $this->showOne($user);
 
     }
 }
