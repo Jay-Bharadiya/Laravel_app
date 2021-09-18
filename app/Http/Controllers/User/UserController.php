@@ -59,11 +59,11 @@ class UserController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
         //
 
-        $user = User::find($id);
+        // $user = User::find($id);
         // return response()->json(["data" => $user], 200);
         return $this->showOne($user);
 
@@ -84,9 +84,9 @@ class UserController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,User $user)
     {
-        $user = User::findorfail($id);
+        // $user = User::findorfail($id);
         // dd($user);
         $rules = [
 
@@ -129,9 +129,9 @@ class UserController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $user = User::findorfail($id);
+        // $user = User::findorfail($id);
         $user->delete();
         // return response()->json(["data"=>"user sucessfully deleted ", 200]);
         return $this->showOne($user);

@@ -7,12 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 use App\Models\Transaction;
 use App\Models\Seller;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
     const AVAILABLE_PRODUCT='available';
     const UNAVAILABLE_PRODUCT='unavailable';
+
+    protected $dates=['deleted_at'];
 
     protected $fillable = [
         'name',

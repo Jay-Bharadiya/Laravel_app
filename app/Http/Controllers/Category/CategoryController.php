@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\ApiController;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends ApiController
@@ -14,7 +15,9 @@ class CategoryController extends ApiController
      */
     public function index()
     {
-        //
+
+        $categories=Category::all();
+        return $this->showAll($categories);
     }
 
     /**
@@ -35,27 +38,40 @@ class CategoryController extends ApiController
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+
+            "name" => "required",
+            "description" => "required",
+
+
+        ];
+        $this->validate($request, $rules);
+        $data = $request->all();
+
+        $category = Category::create($data);
+        // return response()->json(["data" => $user], 201);
+        return $this->showOne($category,201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Category $category)
     {
-        //
+        return $this->showOne($category);
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
         //
     }
@@ -64,10 +80,10 @@ class CategoryController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
         //
     }
@@ -75,11 +91,14 @@ class CategoryController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+
+        $category->delete();
+
+        return $this->showOne($category);
     }
 }
